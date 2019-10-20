@@ -13,7 +13,8 @@ public class UserInput : Singleton<UserInput>
       _mouseMovementEvent.Axis = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
       return _mouseMovementEvent;
     }
-    set {
+    set
+    {
       _mouseMovementEvent = value;
     }
   }
@@ -30,7 +31,8 @@ public class UserInput : Singleton<UserInput>
 
   #region Mouse Input
 
-  public bool GetMousePress(int mouseIndex) {
+  public bool GetMousePress(int mouseIndex)
+  {
     if (Input.GetMouseButtonDown(mouseIndex)) return true;
     return false;
   }
@@ -51,8 +53,12 @@ public class UserInput : Singleton<UserInput>
 
   #region KeInput
 
-  public Vector2 GetDirectionalAxis() {
-    return new Vector2(Input.GetAxis("Vertical"), Input.GetAxis("Horizontal"));
+  public Vector2 GetDirectionalAxis()
+  {
+    float v = Input.GetAxis("Vertical");
+    float h = Input.GetAxis("Horizontal");
+
+    return new Vector2(v, h);
   }
 
   #endregion
