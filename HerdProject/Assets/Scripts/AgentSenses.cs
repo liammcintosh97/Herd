@@ -18,16 +18,31 @@ public class AgentSenses : MonoBehaviour
 
   }
 
-  #region
+  #region Private Methods
 
-  public void OnCollisionStay(Collision collision)
-  {
-    objectsInView.Add(collision.gameObject);
+  private bool IsSensible(Collider c) {
+
+    if (c.tag.Equals("Sheep") || c.tag.Equals("Dog")) return true;
+    else return false;
+ 
   }
 
-  public void OnCollisionExit(Collision collision)
+  #endregion
+
+  #region Triggers
+
+  public void OnTriggerStay(Collider other)
   {
-    objectsInView.Remove(collision.gameObject);
+    if (!IsSensible(other)) return;
+
+    objectsInView.Add(other.gameObject);
+  }
+
+  public void OnTriggerExit(Collider other)
+  {
+    if (!IsSensible(other)) return;
+
+    objectsInView.Remove(other.gameObject);
   }
 
   #endregion

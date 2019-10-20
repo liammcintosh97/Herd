@@ -61,6 +61,7 @@ public class SightGenerator : MonoBehaviour
     }
 
     meshCollider.sharedMesh = GenerateMesh();
+    meshCollider.isTrigger = true;
   }
 
   // Update is called once per frame
