@@ -17,12 +17,4 @@ public class AgentMover : MonoBehaviour
   {
    
   }
-
-  #region Public Methods
-
-  public void SetAgentGoal(Vector3 position) {
-    agent.SetDestination(position);
-  }
-
-  #endregion
 }

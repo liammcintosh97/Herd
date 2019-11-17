@@ -6,6 +6,9 @@ public class Sight : MonoBehaviour
 {
   public List<Animal> animalsInView = new List<Animal>(); //All the animals in sight of the object
 
+  public delegate void SightEvent(Animal animal);
+  public SightEvent sightEvent;
+
   // Start is called before the first frame update
   void Start()
   {
@@ -27,6 +30,7 @@ public class Sight : MonoBehaviour
 
     //Add the animal to view of the object
     animalsInView.Add(animal);
+    sightEvent(animal);
   }
 
   public void RemoveAnimalFromView(Animal animal) {
@@ -35,6 +39,7 @@ public class Sight : MonoBehaviour
 
     //Remove the animal from the sight of the object
     animalsInView.Remove(animal);
+    sightEvent(animal);
   }
 
   public bool InView(AnimalType type) {

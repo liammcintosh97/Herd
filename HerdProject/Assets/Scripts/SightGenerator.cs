@@ -74,20 +74,20 @@ public class SightGenerator : MonoBehaviour
 
   public void InitVertices() {
 
-    float a = Length;
-    float b = Spread / 2;
-    float c = Mathf.Sqrt((Mathf.Pow(a,2) + Mathf.Pow(b,2)));
+    float a = Spread / 2; 
+    float b = Height / 2;
+    float c = Length;
 
 
     verts = new Vector3[] {
 
-      new Vector3(0,0,0),
-      new Vector3(b, 0, Length),
-      new Vector3(-b, 0, Length),
+      new Vector3(0,Height / 2,0),
+      new Vector3(Spread / 2, Height / 2, Length),
+      new Vector3(-(Spread / 2), Height / 2, Length),
 
-      new Vector3(0, -Height, 0),
-      new Vector3(b, -Height, Length),
-      new Vector3(-b, -Height, Length),
+      new Vector3(0, -(Height / 2), 0),
+      new Vector3(Spread / 2, -(Height / 2), Length),
+      new Vector3(-(Spread / 2), -(Height / 2), Length),
     };
     mesh.vertices = verts;
   }
