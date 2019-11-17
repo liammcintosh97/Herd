@@ -1,21 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class InputMover : MonoBehaviour
 {
   public float speed;
   public float sprintSpeed;
-  public float angularSpeed;
+  public float turnSpeed;
 
   public float sprintPulseForce;
   public float sprintImpulseTime;
 
   private float currentSpeed;
   private UserInput input;
-  private Vector2 axis;
-  private Rigidbody rigidbody;
+  private Vector3 axis;
+  private NavMeshAgent agent;
   private bool isSprinting;
   private bool justSprtinted;
 
@@ -23,11 +24,7 @@ public class InputMover : MonoBehaviour
   void Start()
   {
     input = UserInput.Instance;
-    if (rigidbody == null)
-    {
-      rigidbody = GetComponent<Rigidbody>();
-      if (rigidbody == null) Debug.LogError("Input Mover couldn't find a Rigidbody");
-    }
+    agent = (NavMeshAgent)Utility.ComponentCheck<NavMeshAgent>(gameObject, agent);
     currentSpeed = speed;
   }
 
@@ -61,23 +58,27 @@ public class InputMover : MonoBehaviour
 
   private void ProcessMovement()
   {
-    if (rigidbody == null) return;
+    if (agent == null) return;
     axis = input.DirAxis;
 
-    //Apply forward movement
-    rigidbody.AddForce(gameObject.transform.forward * (axis.x * speed), ForceMode.Force);
+    if (input.IsDirAxisMoving) {
 
-    //Apply rotation
-    rigidbody.AddTorque(gameObject.transform.up * (axis.y * angularSpeed), ForceMode.Force);
+      Vector3 forward = gameObject.transform.forward.normalized;
 
-    //Reset x and Z rotation of gameObject
-    gameObject.transform.localRotation =  new Quaternion(0,gameObject.transform.localRotation.y,0,gameObject.transform.localRotation.w);
+      agent.Move(forward * ((axis.x * currentSpeed) * Time.deltaTime));
 
+      Turn();
+    }
+  }
+
+  private void Turn() {
+
+      Vector3 rotation = new Vector3(0, axis.y, 0);
+      gameObject.transform.Rotate(rotation * turnSpeed * Time.deltaTime); 
   }
 
   private IEnumerator SprintPulse() {
 
-    rigidbody.AddForce(gameObject.transform.forward * (axis.x * sprintPulseForce), ForceMode.Impulse);
     justSprtinted = false;
 
     yield return new WaitForSeconds(sprintImpulseTime);

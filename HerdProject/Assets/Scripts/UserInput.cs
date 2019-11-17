@@ -24,7 +24,13 @@ public class UserInput : Singleton<UserInput>
 
   public Vector2 MousePos { get; }
   public bool IsMouseMoving { get; }
-  public bool IsDirAxisMoving { get; }
+
+  public bool IsDirAxisMoving {
+    get {
+      GetDirectionalAxis();
+      return _isDirAxisMoving;
+    }
+  }
 
   public Vector2 MouseAxis
   {
@@ -139,7 +145,8 @@ public class UserInput : Singleton<UserInput>
 
   private bool VectorEpsilon(Vector2 v) {
 
-    if (v.x > Mathf.Epsilon || v.y > Mathf.Epsilon) return true;
+    if ((v.x > Mathf.Epsilon || v.x < -Mathf.Epsilon) || 
+      (v.y > Mathf.Epsilon || v.y < -Mathf.Epsilon)) return true;
     else return false;
 
   }

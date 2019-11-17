@@ -11,7 +11,7 @@ public class GroundSelector : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
-    if (camera == null) camera = GetComponent<Camera>();
+    camera = (Camera)Utility.ComponentCheck<Camera>(gameObject, camera);
     input = UserInput.Instance;
   }
 

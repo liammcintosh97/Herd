@@ -5,20 +5,17 @@ using UnityEngine.AI;
 
 public class AgentMover : MonoBehaviour
 {
+  public Transform[] navPoints;
   public NavMeshAgent agent;
 
   public void Start()
   {
-    if (agent == null)
-    {
-      agent = GetComponent<NavMeshAgent>();
-      if (agent == null) Debug.LogError("Nav Mesh agent couldn't be found");
-    }
+    agent = (NavMeshAgent)Utility.ComponentCheck<NavMeshAgent>(gameObject, agent);
   }
 
   public void Update()
   {
-
+   
   }
 
   #region Public Methods

@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AgentSenses : MonoBehaviour
+public class Dog : Animal
 {
   // Start is called before the first frame update
-  void Start()
+  new void Start()
   {
-
+    base.Start();
+    animalType = AnimalType.Dog;
   }
 
   // Update is called once per frame
